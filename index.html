@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/style.css">
+    <title>JSONToolkit</title>
+</head>
+
+<body>
+    <div class="json-input">
+        <div class="input-head">
+            JSON Input
+        </div>
+        <textarea name="input-area" id="input-text">Insert Input</textarea>
+        <button type="button" id="validateButton" onclick=parse()>Validate</button>
+        <button type="button" id="validateButton" onclick=format()>Format</button>
+    </div>
+
+    <div class="json-output">
+        <div class="output-head">
+            JSON output
+        </div>
+        <textarea name="output-area" id="output-text" disabled></textarea>
+        <button type="button" id="validateButton" onclick=copy()>Copy Output</button>
+    </div>
+
+    <script>
+        function parse() {
+            let text = document.getElementById("input-text").value;
+            console.log(text);
+            try {
+                let json = JSON.parse(text);
+            } catch (e) {
+                alert(e);
+            }
+        }
+
+        function format() {
+            let text = document.getElementById("input-text").value;
+            let outputField = document.getElementById("output-text");
+
+            outputField.disabled = false;
+
+            try {
+                let json = JSON.parse(text);
+                let formatted = JSON.stringify(json, null, 4);
+
+                outputField.innerHTML = formatted;
+                outputField.disabled = false;
+
+                console.log(JSON.stringify(json, null, 4));
+            } catch (e) {
+                alert(e);
+            }
+        }
+
+        function copy() {
+            let output = document.getElementById("output-text").value;
+
+            try {
+                navigator.clipboard.writeText(output);
+                alert("Copied");
+            } catch (e) {
+                alert(e);
+            }
+        }
+    </script>
+</body>
+
+</html>
